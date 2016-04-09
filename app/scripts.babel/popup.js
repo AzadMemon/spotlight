@@ -4,16 +4,21 @@ chrome.windows.getAll(function (windows) {
   for (var i = 0; i < windows.length; i++) {
     chrome.tabs.getAllInWindow(windows[i].id, function (tabs) {
       for (var j = 0; j < tabs.length; j++) {
+        console.log(tabs[j].favIconUrl);
+        var isFavIconChromeUrl = !tabs[j].favIconUrl || tabs[j].favIconUrl.indexOf('chrome://') != -1;
+        var favIconUrl = isFavIconChromeUrl ? '/images/default-favicon.png' : tabs[j].favIconUrl;
+
         $('.menu').append(
           '<div class="item" data-value="' + tabs[j].url + '">' +
-          '<img class="favicon" src="' + tabs[j].favIconUrl + '" />' +
-          '<span>' + tabs[j].title + '</span>' +
+            '<img class="favicon" src="' + favIconUrl + '" />' +
+            '<span>' + tabs[j].title + '</span>' +
           '</div>'
         );
       }
 
 
 
+      // TODO: Need to add favicons when accessing chrome extensions/settings
       // TODO: Need to add history + bookmarks
       // TODO: Need to listen on new tab creation chrome.tabs.onCreated
       // TODO: Need to listen on tab deletion chrome.tabs.onRemoved
