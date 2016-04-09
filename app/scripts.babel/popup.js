@@ -1,12 +1,21 @@
 'use strict';
 
+// TODO: Add a loading bar in the list when loading search results
+// TODO: On search, need to actually search history and bookmarks and replace contents with that
+// TODO: Need to listen on tab change and take a screenshot chrome.tabs.onActivated
+// TODO: Need to add listener for onEnter to actually select the tab and go to it
+// TODO: Need to add listener to onScroll to a) change image and b) check if image is either last or first and scroll menu all the way to the bottom or top respectively
+// TODO: Sort open tabs by most recently visited
+// TODO: (DON'T NEED BECAUSE POPUP CLOSES ON BLUR) Need to listen on new tab creation chrome.tabs.onCreated and add to list
+// TODO: (DON'T NEED BECAUSE POPUP CLOSES ON BLUR) Need to listen on tab deletion chrome.tabs.onRemoved and remove from list
 
 function initDropdown() {
   $('.ui.dropdown').dropdown({
     fullTextSearch: true,
     direction: 'downward',
     allowTabs: true,
-    duration: 0
+    duration: 0,
+    onHide: () => {return false}
   });
 
   $('input').focus();
@@ -43,15 +52,6 @@ function appendHeading(text) {
     '<div class="ui divider ' + text + '"></div>'
   );
 }
-
-// TODO: Add a loading bar in the list when loading search results
-// TODO: On search, need to actually search history and bookmarks and replace contents with that
-// TODO: Need to listen on new tab creation chrome.tabs.onCreated and add to list
-// TODO: Need to listen on tab deletion chrome.tabs.onRemoved and remove from list
-// TODO: Need to listen on tab change and take a screenshot chrome.tabs.onActivated
-// TODO: Need to add listener for onEnter to actually select the tab and go to it
-// TODO: Need to add listener to onScroll to a) change image and b) check if image is either last or first and scroll menu all the way to the bottom or top respectively
-// TODO: Sort open tabs by most recently visited
 
 function addOpenTabsToMenu(callback) {
   chrome.windows.getAll(function (windows) {
