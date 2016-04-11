@@ -4,93 +4,59 @@ body {
   background-color: transparent;
 }
 
-.ui.selection.dropdown {
-  height: 45px;
-}
-
-input {
-  height: 45px;
-  line-height: 45px !important;
-}
-
-.default.text {
-  height: 45px;
-  line-height: 24px;
-}
-
-i.icon.search:before {
-  line-height: 24px;
-}
-
-.ui.selection.active.dropdown,
-.ui.selection.active.dropdown:focus,
-.ui.selection.active.dropdown:active,
-.ui.selection.active.dropdown:hover,
-.ui.selection.dropdown,
-.ui.selection.dropdown:focus,
-.ui.selection.dropdown:active,
-.ui.selection.dropdown:hover {
-  border-left: 0;
-  border-right: 0;
-  border-top: 0;
-  border-color: transparent;
-}
-
 .frame {
   white-space: nowrap;
   text-align: center;
-  height: 300px;
+  height: 380px;
   margin-right: 15px;
 }
 
-.helper {
+.frame .helper {
   display: inline-block;
   height: 100%;
   vertical-align: middle;
 }
 
-.image.screenshot {
+.frame .screenshot {
   display: inline-block !important;
   background: #3A6F9A;
   vertical-align: middle;
   max-height: 300px;
 }
 
-.ui.selection.dropdown .menu {
+.list {
   padding-top: 10px;
-  min-width: 37.5%;
-  width: 37.5%;
   margin-top: 4px;
-  min-height: 338px;
-  border-radius: 0;
-  box-shadow: none;
-  border-color: transparent;
-  border: 0;
-  display: block !important;
+  height: 380px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.ui.selection.active.dropdown .menu {
-  border-radius: 0;
-  box-shadow: none;
-  border-color: transparent;
-  border: 0;
-}
-
-.ui.selection.active.dropdown:hover .menu {
-  border-radius: 0;
-  box-shadow: none;
-  border-color: transparent;
-  border: 0;
-}
-
-.favicon {
-  height: 20px;
-  width: 20px;
-}
-
-.menu .heading {
+.list .heading {
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 900;
   padding-left: 5px;
+}
+
+.list .item .ui.avatar.image {
+  display: inline-block;
+  padding-right: 0 !important;
+}
+
+.list .item .content {
+  display: inline-block !important;
+}
+
+.ui.grid > .row.top {
+  padding-bottom: 0;
+}
+
+.ui.grid > .row.bottom {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.ui.grid > .row > .ten.wide.column {
+  padding-left: 0;
 }

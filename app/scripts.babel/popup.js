@@ -9,20 +9,6 @@
 // TODO: (DON'T NEED BECAUSE POPUP CLOSES ON BLUR) Need to listen on new tab creation chrome.tabs.onCreated and add to list
 // TODO: (DON'T NEED BECAUSE POPUP CLOSES ON BLUR) Need to listen on tab deletion chrome.tabs.onRemoved and remove from list
 
-function initDropdown() {
-  $('.ui.dropdown').dropdown({
-    fullTextSearch: true,
-    direction: 'downward',
-    allowTabs: true,
-    duration: 0,
-    onHide: () => {return false}
-  });
-
-  $('input').focus();
-  $('.menu').scrollTop(0);
-}
-
-
 appendHeading('open');
 addOpenTabsToMenu(function (numberOfResults) {
   if (numberOfResults === 0) {
@@ -40,14 +26,12 @@ addOpenTabsToMenu(function (numberOfResults) {
       if (numberOfResults === 0) {
         $('.menu').remove('.bookmarks');
       }
-
-      initDropdown();
     });
   });
 });
 
 function appendHeading(text) {
-  $('.menu').append(
+  $('.list').append(
     '<div class="heading ' + text + '">' + text + '</div>' +
     '<div class="ui divider ' + text + '"></div>'
   );
@@ -65,12 +49,14 @@ function addOpenTabsToMenu(callback) {
           var favIconUrl = showDefaultFavIcon ? '/images/default-favicon.png' : tabs[j].favIconUrl;
           var title = tabs[j].title || tabs[j].url;
 
-          $('.menu').append(
-            '<div class="item" data-value="' + tabs[j].url + '">' +
-            '<object class="favicon" data="' + favIconUrl + '" type="image/png">' +
-            '<img src="/images/default-favicon.png" />' +
+          $('.list').append(
+            '<div class="item">' +
+            '<object class="ui avatar image favicon" data="' + favIconUrl + '" type="image/png">' +
+            '<img class="ui avatar image" src="/images/default-favicon.png" />' +
             '</object>' +
-            '<span>' + title + '</span>' +
+            '<div class="content">' +
+            '<a class="header">' + title + '</a>' +
+            '</div>' +
             '</div>'
           );
         }
@@ -92,12 +78,14 @@ function addHistoryToMenu(callback) {
       var favIconUrl = showDefaultFavicon ? '/images/default-favicon.png' : parsedUrl.protocol + '//' + parsedUrl.host + '/favicon.ico';
       var title = history[j].title || history[j].url;
 
-      $('.menu').append(
-        '<div class="item" data-value="' + history[j].url + '">' +
-        '<object class="favicon" data="' + favIconUrl + '" type="image/png">' +
-        '<img src="/images/default-favicon.png" />' +
+      $('.list').append(
+        '<div class="item">' +
+        '<object class="ui avatar image favicon" data="' + favIconUrl + '" type="image/png">' +
+        '<img class="ui avatar image" src="/images/default-favicon.png" />' +
         '</object>' +
-        '<span>' + title + '</span>' +
+        '<div class="content">' +
+        '<a class="header">' + title + '</a>' +
+        '</div>' +
         '</div>'
       );
     }
@@ -114,12 +102,14 @@ function addBookmarksToMenu(callback) {
       var favIconUrl = showDefaultFavicon ? '/images/default-favicon.png' : parsedUrl.protocol + '//' + parsedUrl.host + '/favicon.ico';
       var title = bookmarks[j].title || bookmarks[j].url;
 
-      $('.menu').append(
-        '<div class="item" data-value="' + bookmarks[j].url + '">' +
-        '<object class="favicon" data="' + favIconUrl + '" type="image/png">' +
-        '<img src="/images/default-favicon.png" />' +
+      $('.list').append(
+        '<div class="item">' +
+        '<object class="ui avatar image favicon" data="' + favIconUrl + '" type="image/png">' +
+        '<img class="ui avatar image" src="/images/default-favicon.png" />' +
         '</object>' +
-        '<span>' + title + '</span>' +
+        '<div class="content">' +
+        '<a class="header">' + title + '</a>' +
+        '</div>' +
         '</div>'
       );
     }
