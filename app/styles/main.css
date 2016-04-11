@@ -4,6 +4,13 @@ body {
   background-color: transparent;
 }
 
+input {
+  border-radius: 0!important;
+  border-top: 0!important;
+  border-left: 0!important;
+  border-right: 0!important;
+}
+
 .frame {
   white-space: nowrap;
   text-align: center;
@@ -24,28 +31,38 @@ body {
   max-height: 300px;
 }
 
-.list {
-  padding-top: 10px;
+.ui.list {
+  padding-top: 10px !important;
   margin-top: 4px;
   height: 380px;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.list .heading {
+.ui.list .heading {
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 900;
   padding-left: 5px;
 }
 
-.list .item .ui.avatar.image {
-  display: inline-block;
+.ui.list .item {
+  position: relative;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 0.75em !important;
+  padding-bottom: 0.75em !important;
+}
+
+.ui.list .item .ui.avatar.image {
+  position: absolute;
   padding-right: 0 !important;
 }
 
-.list .item .content {
+.ui.list .item .content {
   display: inline-block !important;
+  padding-left: 35px !important;
+  word-break: break-word;
 }
 
 .ui.grid > .row.top {
@@ -57,6 +74,6 @@ body {
   padding-bottom: 0;
 }
 
-.ui.grid > .row > .ten.wide.column {
+.ui.grid > .row > .nine.wide.column {
   padding-left: 0;
 }
