@@ -64,6 +64,11 @@ input {
   word-break: break-word;
 }
 
+.ui.list .item.selected {
+  background: rgba(0,0,0,.05);
+  color: rgba(0,0,0,.9);
+}
+
 .ui.grid > .row.top {
   padding-bottom: 0;
 }
@@ -75,4 +80,9 @@ input {
 
 .ui.grid > .row > .nine.wide.column {
   padding-left: 0;
+}
+
+.screenshot-not-available {
+  display: inline-block;
+  white-space: pre-wrap;
 }

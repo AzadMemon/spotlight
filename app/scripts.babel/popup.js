@@ -34,7 +34,7 @@ function addOpenTabsToMenu(text) {
           var title = tabs[j].title || tabs[j].url;
 
           html +=
-            '<div id="' + counter + '" class="item" data-tab-id="' + tabs[j].id + '" tabindex="' + tabCounter + '">' +
+            '<div id="' + tabCounter + '" class="item" data-tab-id="' + tabs[j].id + '" tabindex="' + tabCounter + '">' +
             '<object class="ui avatar image favicon" data="' + favIconUrl + '" type="image/png">' +
             '<img class="ui avatar image" src="/images/default-favicon.png" />' +
             '</object>' +
@@ -57,22 +57,50 @@ function addOpenTabsToMenu(text) {
 function onKeyDown(event) {
   var selectedItem = $('.selected');
   var index = parseInt(selectedItem.attr('tabindex'));
+  var nextElement;
 
   // TODO: Get image from array and insert in here as well
   // TODO: Need to scroll list so selected is always in view
   if (event.keyCode === 38) { //Up arrow
     index -= 1;
+    nextElement = $('[tabindex=' + index + ']');
 
-    if ($('[tabindex=' + index + ']').length) {
+    if (nextElement.length) {
+      setScreenshot(parseInt(nextElement.data('tabId')));
+      scrollToElement(nextElement.attr('id'));
       selectedItem.removeClass('selected');
-      $('[tabindex=' + index + ']').addClass('selected');
+      nextElement.addClass('selected');
     }
   } else if (event.keyCode === 40) {
     index += 1;
+    nextElement = $('[tabindex=' + index + ']');
 
-    if ($('[tabindex=' + index + ']').length) {
+    if (nextElement.length) {
+      setScreenshot(parseInt(nextElement.data('tabId')));
+      scrollToElement(nextElement.attr('id'));
       selectedItem.removeClass('selected');
-      $('[tabindex=' + index + ']').addClass('selected');
+      nextElement.addClass('selected');
     }
   }
+}
+
+function setScreenshot(tabId) {
+  chrome.runtime.sendMessage({tabId: tabId}, function (response) {
+    var screenshotElement = $('.screenshot');
+    var screenshotNotAvailableElement = $('.screenshot-not-available');
+
+    if (response) {
+      screenshotElement.attr('src', response);
+      screenshotElement.attr('style','display:inline-block !important');
+      screenshotNotAvailableElement.attr('style','display:none !important');
+    } else {
+      screenshotNotAvailableElement.attr('style','display:inline-block !important');
+      screenshotElement.attr('style','display:none !important');
+    }
+  });
+}
+
+function scrollToElement(id) {
+  console.log($('.list').scrollTop() + $('#' + id).position().top);
+  $('.list').scrollTop($('.list').scrollTop() + $('#' + id).position().top);
 }

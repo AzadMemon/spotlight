@@ -12,7 +12,8 @@
     "scripts": [
       "scripts/chromereload.js",
       "scripts/background.js"
-    ]
+    ],
+    "persistent": true
   },
   "permissions": [
     "tabs",
@@ -29,7 +30,8 @@
     "sessions",
     "tabCapture",
     "topSites",
-    "webNavigation"
+    "webNavigation",
+    "<all_urls>"
   ],
   "options_ui": {
     "page": "options.html",
