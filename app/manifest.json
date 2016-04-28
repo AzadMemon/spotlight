@@ -33,23 +33,26 @@
     "webNavigation",
     "<all_urls>"
   ],
+  "commands" : {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space",
+        "windows": "Ctrl+Shift+Space",
+        "mac": "Ctrl+Shift+Space"
+      }
+    },
+    "_execute_page_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space",
+        "windows": "Ctrl+Shift+Space",
+        "mac": "Ctrl+Shift+Space"
+      }
+    }
+  },
   "options_ui": {
     "page": "options.html",
     "chrome_style": true
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "js": [
-        "scripts/contentscript.js"
-      ],
-      "run_at": "document_end",
-      "all_frames": false
-    }
-  ],
   "omnibox": {
     "keyword": "OMNIBOX-KEYWORD"
   },

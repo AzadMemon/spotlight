@@ -43,5 +43,8 @@
         "single"
       ]
     }
+  },
+  "dependencies": {
+    "async": "^1.5.2"
   }
 }

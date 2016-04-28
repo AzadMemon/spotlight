@@ -9,7 +9,7 @@ window.addEventListener('keydown', onKeyDown);
 
 renderMenu();
 $('input').on('input', renderMenu);
-$('input').focus();
+// $('input').focus();
 
 
 function renderMenu(event) {
@@ -18,23 +18,24 @@ function renderMenu(event) {
 }
 
 function addOpenTabsToMenu(text) {
+  console.log('is this even running')
   chrome.windows.getAll(function (windows) {
     var html = '';
     var tabCounter = 0;
 
-    for (var i = 0; i < windows.length; i++) {
-      chrome.tabs.getAllInWindow(windows[i].id, function (tabs) {
-        for (var j = 0; j < tabs.length; j++) {
-          if (text && tabs[j].url.indexOf(text) == -1 && tabs[j].title.indexOf(text) == -1) {
-            continue;
+    windows.forEach(function (chromeWindow) {
+      chrome.tabs.getAllInWindow(chromeWindow.id, function (tabs) {
+        tabs.forEach(function (tab) {
+          if (text && tab.url.indexOf(text) == -1 && tab.title.indexOf(text) == -1) {
+            return;
           }
 
-          var showDefaultFavIcon = !tabs[j].favIconUrl || tabs[j].favIconUrl.indexOf('chrome://') != -1;
-          var favIconUrl = showDefaultFavIcon ? '/images/default-favicon.png' : tabs[j].favIconUrl;
-          var title = tabs[j].title || tabs[j].url;
+          var showDefaultFavIcon = !tab.favIconUrl || tab.favIconUrl.indexOf('chrome://') != -1;
+          var favIconUrl = showDefaultFavIcon ? '/images/default-favicon.png' : tab.favIconUrl;
+          var title = tab.title || tab.url;
 
           html +=
-            '<div id="' + tabCounter + '" class="item" data-tab-id="' + tabs[j].id + '" tabindex="' + tabCounter + '">' +
+            '<div id="' + tabCounter + '" class="item" data-tab-id="' + tab.id + '" tabindex="' + tabCounter + '" data-tab-window="' + chromeWindow.id + '">' +
             '<object class="ui avatar image favicon" data="' + favIconUrl + '" type="image/png">' +
             '<img class="ui avatar image" src="/images/default-favicon.png" />' +
             '</object>' +
@@ -44,43 +45,49 @@ function addOpenTabsToMenu(text) {
             '</div>';
 
           tabCounter++;
-        }
+        })
 
         $('.list').html(html);
         $('.list').remove('#' + counter++); // Remove after so we don't get flash
         $('#0').addClass('selected');
       });
-    }
+    })
   });
 }
 
 function onKeyDown(event) {
   var selectedItem = $('.selected');
+  var tabId = parseInt(selectedItem.attr('data-tab-id'))
   var index = parseInt(selectedItem.attr('tabindex'));
   var nextElement;
 
   // TODO: Get image from array and insert in here as well
   // TODO: Need to scroll list so selected is always in view
-  if (event.keyCode === 38) { //Up arrow
-    index -= 1;
-    nextElement = $('[tabindex=' + index + ']');
+  // TODO: Add listener when new tab is created and repopulate list
+  // TODO: check if tab is within which window and bring window to front on enter press
+  switch (event.keyCode) {
+    case 13: //Enter key
+      chrome.tabs.update(tabId, {active: true});
+    case 38: //up arrow
+      index -= 1;
+      nextElement = $('[tabindex=' + index + ']');
 
-    if (nextElement.length) {
-      setScreenshot(parseInt(nextElement.data('tabId')));
-      scrollToElement(nextElement.attr('id'));
-      selectedItem.removeClass('selected');
-      nextElement.addClass('selected');
-    }
-  } else if (event.keyCode === 40) {
-    index += 1;
-    nextElement = $('[tabindex=' + index + ']');
+      if (nextElement.length) {
+        setScreenshot(parseInt(nextElement.data('tabId')));
+        scrollToElement(nextElement.attr('id'));
+        selectedItem.removeClass('selected');
+        nextElement.addClass('selected');
+      }
+    case 40:
+      index += 1;
+      nextElement = $('[tabindex=' + index + ']');
 
-    if (nextElement.length) {
-      setScreenshot(parseInt(nextElement.data('tabId')));
-      scrollToElement(nextElement.attr('id'));
-      selectedItem.removeClass('selected');
-      nextElement.addClass('selected');
-    }
+      if (nextElement.length) {
+        setScreenshot(parseInt(nextElement.data('tabId')));
+        scrollToElement(nextElement.attr('id'));
+        selectedItem.removeClass('selected');
+        nextElement.addClass('selected');
+      }
   }
 }
 
