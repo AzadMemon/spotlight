@@ -69,6 +69,7 @@ function onKeyDown(event) {
   switch (event.keyCode) {
     case 13: //Enter key
       chrome.tabs.update(tabId, {active: true});
+      window.close();
     case 38: //up arrow
       index -= 1;
       nextElement = $('[tabindex=' + index + ']');
@@ -99,11 +100,11 @@ function setScreenshot(tabId) {
 
     if (response) {
       screenshotElement.attr('src', response);
-      screenshotElement.attr('style','display:inline-block !important');
-      screenshotNotAvailableElement.attr('style','display:none !important');
+      screenshotElement.attr('style', 'display:inline-block !important');
+      screenshotNotAvailableElement.attr('style', 'display:none !important');
     } else {
-      screenshotNotAvailableElement.attr('style','display:inline-block !important');
-      screenshotElement.attr('style','display:none !important');
+      screenshotNotAvailableElement.attr('style', 'display:inline-block !important');
+      screenshotElement.attr('style', 'display:none !important');
     }
   });
 }
