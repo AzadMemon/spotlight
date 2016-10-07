@@ -48,8 +48,9 @@ function addOpenTabsToMenu(text) {
         })
 
         $('.list').html(html);
-        $('.list').remove('#' + counter++); // Remove after so we don't get flash
+        $('.list').remove('#' + counter++); // Remove after so we don't get flash (per window)
         $('#0').addClass('selected');
+        setScreenshot($('#0').data('tabId'));
       });
     })
   });
@@ -108,6 +109,5 @@ function setScreenshot(tabId) {
 }
 
 function scrollToElement(id) {
-  console.log($('.list').scrollTop() + $('#' + id).position().top);
   $('.list').scrollTop($('.list').scrollTop() + $('#' + id).position().top);
 }

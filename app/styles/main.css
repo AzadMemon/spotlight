@@ -36,6 +36,7 @@ input {
   height: 380px;
   overflow-y: auto;
   overflow-x: hidden;
+  border-right: 1px solid rgba(34, 36, 38, 0.14902)
 }
 
 .ui.list .heading {
