@@ -9,7 +9,7 @@ window.addEventListener('keydown', onKeyDown);
 
 renderMenu();
 $('input').on('input', renderMenu);
-// $('input').focus();
+$('input').focus();
 
 
 function renderMenu(event) {
